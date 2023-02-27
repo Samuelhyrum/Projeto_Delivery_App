@@ -1,4 +1,4 @@
-import SaleProduct from './SaleProduct';
+const SaleProduct = require('./SaleProduct');
 
 module.exports = (sequelize, DataTypes) => {
     const Product = sequelize.define('Product', {
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'products',
     });
   
-    Product.belongsToMany(Sale, { through: SaleProduct, foreignKey: 'product_id' });
+    // Product.belongsToMany(SaleProduct, { through: SaleProduct, foreignKey: 'product_id' });
   
     return Product;
   };
