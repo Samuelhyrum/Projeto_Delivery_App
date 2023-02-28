@@ -23,4 +23,35 @@ const create = async (name, email, passw) => {
     return { token };
 };
 
-module.exports = { create };
+const findAll = async () => {
+  const result = await User.findAll();
+  return result;
+};
+
+const getByRole = async (role) => {
+  const [result] = await User.findAll({ where: { role } });
+  if (!result) return { type: 'ROLE_NOT_FOUND', message: 'Role not found' };
+  return result;
+};
+
+const getById = async (id) => {
+  const [result] = await User.findAll({ where: { id } });
+  if (!result) return { type: 'ID_NOT_FOUND', message: 'Id not found' };
+  return result;
+};
+
+const update = async (id, user) => {
+  const [rowsAffected] = await User.update(user, { where: { id } });
+  if (rowsAffected < 1) return { type: 'UPDATE_FAILED', message: 'Something went wrong' };
+  const updatedUser = await getById(Number(id));
+  return updatedUser;
+};
+
+const remove = async (id) => {
+  const [result] = await User.findAll({ where: { id } });
+  if (!result) return { type: 'ID_NOT_FOUND', message: 'Id not found' };
+  const removed = await User.destroy({ where: { id } });
+  return removed;
+};
+
+module.exports = { create, getByRole, findAll, getById, update, remove };
