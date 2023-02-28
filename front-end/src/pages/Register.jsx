@@ -2,86 +2,89 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+const MIN_CHAR_NAME = 12;
 const MIN_CHAR_PASSWORD = 6;
+const MSG_ERROR = 'Email ou nome já cadastrados!';
 
-export default function Login() {
+export default function Register() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [loginFailed, setLoginFailed] = useState(false);
+  const [registerFailed, setRegisterFailed] = useState(false);
   const history = useHistory();
 
   const handleChange = ({ target }) => {
     const { value, type } = target;
     if (type === 'email') return setEmail(value);
-    return setPassword(value);
+    if (type === 'password') return setPassword(value);
+    return setName(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { email, password };
-
+    const data = { name, email, password };
     try {
-      const result = await axios.post('http://localhost:3001/login', data);
+      const result = await axios.post('http://localhost:3001/users', data);
       console.log(result);
-      setLoginFailed(false);
+      setRegisterFailed(false);
       history.push('/customer/products');
     } catch (er) {
       console.log(er);
-      setLoginFailed(true);
+      setRegisterFailed(true);
     }
   };
 
-  const handleClick = () => history.push('/register');
-
   useEffect(() => {
-    setLoginFailed(false);
+    setRegisterFailed(false);
     const regex = /\S+@\S+\.\S+/;
 
     const validateEmail = () => regex.test(email);
     const validatePassword = () => password.length >= MIN_CHAR_PASSWORD;
+    const validateName = () => name.length >= MIN_CHAR_NAME;
 
     const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
+    const isNameValid = validateName();
 
-    if (isEmailValid && isPasswordValid) return setDisabled(false);
+    if (isEmailValid && isPasswordValid && isNameValid) return setDisabled(false);
     return setDisabled(true);
-  }, [email, password]);
+  }, [name, email, password]);
 
   return (
     <div>
       <form onSubmit={ (event) => handleSubmit(event) }>
-        Login
+        Nome
         <input
-          data-testid="common_login__input-email"
+          data-testid="common_register__input-name"
+          type="text"
+          value={ name }
+          onChange={ (event) => handleChange(event) }
+        />
+        Email
+        <input
+          data-testid="common_register__input-email"
           type="email"
           value={ email }
           onChange={ (event) => handleChange(event) }
         />
         Senha
         <input
-          data-testid="common_login__input-password"
+          data-testid="common_register__input-password"
           type="password"
           value={ password }
           onChange={ (event) => handleChange(event) }
         />
         <button
-          data-testid="common_login__button-login"
+          data-testid="common_register__button-register"
           type="submit"
           disabled={ disabled }
         >
-          LOGIN
-        </button>
-        <button
-          data-testid="common_login__button-register"
-          type="button"
-          onClick={ () => handleClick() }
-        >
-          Ainda não tenho conta
+          CADASTRAR
         </button>
       </form>
-      { loginFailed
-      && <p data-testid="common_login__element-invalid-email">Email não registrado!</p>}
+      { registerFailed
+      && <p data-testid="common_register__element-invalid_register">{MSG_ERROR}</p> }
     </div>
   );
 }
