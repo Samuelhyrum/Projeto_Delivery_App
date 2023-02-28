@@ -2,6 +2,16 @@ const crypto = require('crypto');
 const { createToken } = require('../auth/jwtFunctions');
 const { User } = require('../../database/models');
 
+const findByEmail = async (email) => {
+  const user = await User.findOne({ where: { email }});
+  return user;
+};
+
+const findByName = async (name) => {
+  const user = await User.findOne({ where: { name }});
+  return user;
+};
+
 const create = async (name, email, passw) => {
     const password = crypto.createHash('md5').update(passw).digest('hex');
     const emailExists = await findByEmail(email);
@@ -12,15 +22,5 @@ const create = async (name, email, passw) => {
     const token = createToken(userWithoutPassword);
     return { token };
 };
-
-const findByEmail = async (email) => {
-  const user = await User.findOne({ where: { email }});
-  return user;
-}
-
-const findByName = async (name) => {
-  const user = await User.findOne({ where: { name }});
-  return user;
-}
 
 module.exports = { create };
