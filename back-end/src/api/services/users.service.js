@@ -3,12 +3,12 @@ const { createToken } = require('../auth/jwtFunctions');
 const { User } = require('../../database/models');
 
 const findByEmail = async (email) => {
-  const user = await User.findOne({ where: { email }});
+  const user = await User.findOne({ where: { email } });
   return user;
 };
 
 const findByName = async (name) => {
-  const user = await User.findOne({ where: { name }});
+  const user = await User.findOne({ where: { name } });
   return user;
 };
 
