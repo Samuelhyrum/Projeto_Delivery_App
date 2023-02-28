@@ -16,6 +16,6 @@ app.use(accessControl);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 app.use('/login', loginRouter);
-app.use('/users', userRouter)
+app.use('/users', userRouter);
 
 module.exports = app;
