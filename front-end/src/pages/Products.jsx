@@ -17,43 +17,36 @@ export default function Products() {
     getAllProducts();
   }, []);
 
-  const allProducts = products && products.map((p, index) => (
-    <div key={ index }>
+  const allProducts = products && products.map((p) => (
+    <div key={ p.id }>
       <p
-        data-testid={ `customer_products__element-card-price-${index}` }
+        data-testid={ `customer_products__element-card-price-${p.id}` }
       >
         {p.price}
       </p>
       <img
         src={ p.urlImage }
         alt=""
-        data-testid={
-          `customer_products__img-card-bg-image-${index}`
-        }
+        data-testid={ `customer_products__img-card-bg-image-${p.id}` }
       />
       <p
-        data-testid={ `customer_products__element-card-title-${index}` }
+        data-testid={ `customer_products__element-card-title-${p.id}` }
       >
         {p.name}
       </p>
       <button
         type="button"
-        data-testid={
-          `customer_products__button-card-rm-item-${index}`
-        }
+        data-testid={ `customer_products__button-card-rm-item-${p.id}` }
       >
         -
       </button>
       <input
         type="number"
-        data-testid={ `
-customer_products__input-card-quantity-${index}` }
+        data-testid={ `customer_products__input-card-quantity-${p.id}` }
       />
       <button
         type="button"
-        data-testid={
-          `customer_products__button-card-add-item-${index}`
-        }
+        data-testid={ `customer_products__button-card-add-item-${p.id}` }
       >
         +
       </button>
