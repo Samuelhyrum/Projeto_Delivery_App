@@ -55,4 +55,19 @@ const remove = async (id) => {
     return removed;
 };
 
-module.exports = { create, findAll, getById, update, getSalesBySellerId, getSalesByUserId, remove };
+const getByStatus = async (status) => {
+    const result = await Sale.findAll({ where: { status } });
+    if (result.length <= 0) return { type: 'STATUS_NOT_FOUND', message: 'Status not found' };
+    return result;
+};
+
+module.exports = { 
+    create,
+    findAll, 
+    getById, 
+    update, 
+    getSalesBySellerId, 
+    getSalesByUserId, 
+    remove, 
+    getByStatus,
+};

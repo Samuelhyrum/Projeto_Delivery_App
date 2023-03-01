@@ -11,6 +11,7 @@ const {
     getSalesBySellerId, 
     getSalesByUserId, 
     remove,
+    getByStatus,
 } = require('../controllers/sales.controller');
 
 router.get('/', findAll);
@@ -20,5 +21,6 @@ router.get('/seller/:id', getSalesBySellerId);
 router.get('/user/:id', getSalesByUserId);
 router.put('/:id', update);
 router.delete('/:id', remove);
+router.get('/status/:status', getByStatus);
 
 module.exports = router;
