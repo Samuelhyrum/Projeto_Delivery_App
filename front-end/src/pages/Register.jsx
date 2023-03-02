@@ -25,12 +25,10 @@ export default function Register() {
     e.preventDefault();
     const data = { name, email, password };
     try {
-      const result = await axios.post('http://localhost:3001/users', data);
-      console.log(result);
-      setRegisterFailed(false);
+      await axios.post('http://localhost:3001/users', data);
       history.push('/customer/products');
     } catch (er) {
-      console.log(er);
+      console.error(er);
       setRegisterFailed(true);
     }
   };

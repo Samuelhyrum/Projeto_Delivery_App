@@ -18,8 +18,8 @@ const create = async (name, email, passw) => {
     const nameExists = await findByName(name);
     if (emailExists || nameExists) return { type: 'Error', message: 'Could not create user' };
     const user = await User.create({ name, email, password, role: 'customer' });
-    const { password: _password, ...userWithoutPassword } = user.dataValues;
-    const token = createToken(userWithoutPassword);
+    const { password: _password, id: _id, ...userWithoutIdAndPassword } = user.dataValues;
+    const token = createToken(userWithoutIdAndPassword);
     return { token };
 };
 
