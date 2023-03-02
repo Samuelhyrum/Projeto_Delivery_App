@@ -24,14 +24,16 @@ export default function Login() {
     const data = { email, password };
     try {
       const result = await axios.post('http://localhost:3001/login', data);
+      const { token } = result.data;
       // decodifica o token para obter as informações necessárias
-      const decodedToken = jwtDecode(result.data.token);
+      const decodedToken = jwtDecode(token);
+      const { name, email: emailData, role } = decodedToken;
       // cria o objeto com as informações do usuário e o token original
       const user = {
-        name: decodedToken.name,
-        email: decodedToken.email,
-        role: decodedToken.role,
-        token: result.data.token,
+        name,
+        email: emailData,
+        role,
+        token,
       };
       // salva o objeto no localStorage
       localStorage.setItem('user', JSON.stringify(user));
