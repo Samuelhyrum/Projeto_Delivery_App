@@ -18,16 +18,14 @@ const verifyCreate = async (userId, sellerId) => {
 const getById = async (id) => {
     const { dataValues } = await Sale.findOne({ where: { id }, 
         include: [
-            { model: SaleProduct, as: 'saleProducts' },
-            { model: Product, as: 'products' },
+            { model: Product, as: 'products', through: { attributes: ['quantity'] } },
         ],
      });
     if (!dataValues) return { type: 'ID_NOT_FOUND', message: 'Id not found' };
-
     const products = dataValues.products.map((product, index) => ({
         productName: product.name,
         price: product.price,
-        quantity: dataValues.saleProducts[index].quantity,
+        quantity: dataValues.products[index].SaleProduct.quantity,
       }));
       return { ...dataValues, products };
 };
