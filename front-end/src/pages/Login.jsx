@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import jwtDecode from 'jwt-decode';
+// jwt não funciona no navegador, se usar a aplicação quebra.
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,14 +22,24 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { email, password };
-
     try {
       const result = await axios.post('http://localhost:3001/login', data);
-      console.log(result);
-      setLoginFailed(false);
+      const { token } = result.data;
+      // decodifica o token para obter as informações necessárias
+      const decodedToken = jwtDecode(token);
+      const { name, email: emailData, role } = decodedToken;
+      // cria o objeto com as informações do usuário e o token original
+      const user = {
+        name,
+        email: emailData,
+        role,
+        token,
+      };
+      // salva o objeto no localStorage
+      localStorage.setItem('user', JSON.stringify(user));
       history.push('/customer/products');
     } catch (er) {
-      console.log(er);
+      console.error(er);
       setLoginFailed(true);
     }
   };

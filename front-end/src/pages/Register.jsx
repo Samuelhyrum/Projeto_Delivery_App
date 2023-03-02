@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
 const MIN_CHAR_NAME = 12;
@@ -26,11 +27,22 @@ export default function Register() {
     const data = { name, email, password };
     try {
       const result = await axios.post('http://localhost:3001/users', data);
-      console.log(result);
-      setRegisterFailed(false);
+      const { token } = result.data;
+      // decodifica o token para obter as informações necessárias
+      const decodedToken = jwtDecode(token);
+      const { name: nameData, email: emailData, role } = decodedToken;
+      // cria o objeto com as informações do usuário e o token original
+      const user = {
+        name: nameData,
+        email: emailData,
+        role,
+        token,
+      };
+      // salva o objeto no localStorage
+      localStorage.setItem('user', JSON.stringify(user));
       history.push('/customer/products');
     } catch (er) {
-      console.log(er);
+      console.error(er);
       setRegisterFailed(true);
     }
   };

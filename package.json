@@ -53,5 +53,8 @@
       "__TESTDESC__": true,
       "__TESTFILE__": true
     }
+  },
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
   }
 }
