@@ -47,6 +47,13 @@ const remove = async (req, res) => {
     return res.status(204).json(deletedSale);
 };
 
+const getByStatus = async (req, res) => {
+    const { status } = req.params;
+    const result = await salesService.getByStatus(status);
+    if (result.type) return res.status(404).json({ message: result.message });
+    return res.status(200).json(result);
+};
+
 module.exports = {
     create,
     findAll,
@@ -55,4 +62,5 @@ module.exports = {
     getSalesBySellerId,
     getSalesByUserId,
     remove,
+    getByStatus,
 };

@@ -1,0 +1,25 @@
+{
+    "sale": {
+        "userId": 2,
+        "sellerId": 2,
+        "totalPrice": "100.50",
+        "deliveryAddress": "Rua 123",
+        "deliveryNumber": "123",
+        "status": "teste"
+    },
+    "products":[
+        {
+            "id": 1,
+            "name": "Skol Lata 250ml",
+            "price": "2.20",
+            "quantity": 2
+
+        },
+        {
+            "id": 2,
+            "name": "Heineken 600ml",
+            "price": "7.50",
+            "quantity": 3
+        }
+    ]
+}

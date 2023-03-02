@@ -1,8 +1,7 @@
-const { Sale } = require('../../database/models');
+const { Sale, sequelize, SaleProduct, Product } = require('../../database/models');
 const usersService = require('./users.service');
 
-const create = async (sale) => {
-    const { userId, sellerId } = sale;
+const verifyCreate = async (userId, sellerId) => {
     const userIdExists = await usersService.getById(userId);
     if (userIdExists.type) return { type: 'ID_NOT_FOUND', message: 'User id not found' };
     
@@ -13,19 +12,43 @@ const create = async (sale) => {
     if (checkRole.role !== 'seller') {
         return { type: 'PERMISSION_DENIED', message: 'User role is not seller' };
     }
+    return undefined;
+};
 
-    const createdSale = await Sale.create(sale);
+const getById = async (id) => {
+    const { dataValues } = await Sale.findOne({ where: { id }, 
+        include: [
+            { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+        ],
+     });
+    if (!dataValues) return { type: 'ID_NOT_FOUND', message: 'Id not found' };
+    const products = dataValues.products.map((product, index) => ({
+        productName: product.name,
+        price: product.price,
+        quantity: dataValues.products[index].SaleProduct.quantity,
+      }));
+      return { ...dataValues, products };
+};
+
+const create = async ({ sale, products }) => {
+    const { userId, sellerId } = sale;
+    const checkingData = verifyCreate(userId, sellerId);
+    if (checkingData.type) return checkingData;
+    const newSaleId = await sequelize.transaction(async (t) => {
+        const { dataValues: { id } } = await Sale.create(sale, { transaction: t });
+        const prodPromisses = products.map((product) => {
+            const { id: productId, quantity } = product;
+            return SaleProduct.create({ saleId: id, productId, quantity }, { transaction: t }); 
+        });
+        await Promise.all(prodPromisses);
+        return id;
+    });
+    const createdSale = await getById(newSaleId);
     return createdSale;
 };
 
 const findAll = async () => {
     const result = await Sale.findAll();
-    return result;
-};
-
-const getById = async (id) => {
-    const [result] = await Sale.findAll({ where: { id } });
-    if (!result) return { type: 'ID_NOT_FOUND', message: 'Id not found' };
     return result;
 };
 
@@ -55,4 +78,19 @@ const remove = async (id) => {
     return removed;
 };
 
-module.exports = { create, findAll, getById, update, getSalesBySellerId, getSalesByUserId, remove };
+const getByStatus = async (status) => {
+    const result = await Sale.findAll({ where: { status } });
+    if (result.length <= 0) return { type: 'STATUS_NOT_FOUND', message: 'Status not found' };
+    return result;
+};
+
+module.exports = { 
+    create,
+    findAll, 
+    getById, 
+    update, 
+    getSalesBySellerId, 
+    getSalesByUserId, 
+    remove, 
+    getByStatus,
+};
