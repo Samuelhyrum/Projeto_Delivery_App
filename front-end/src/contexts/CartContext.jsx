@@ -24,12 +24,12 @@ function CartContextProvider({ children }) {
     } else if (itemIndex >= 0) {
       // Se o item já existe no carrinho, atualiza a quantidade
       const updatedCartItems = [...cartItems];
-      updatedCartItems[itemIndex].qty = quantity;
+      updatedCartItems[itemIndex].quantity = quantity;
       setCartItems(updatedCartItems);
       localStorage.setItem('cart', JSON.stringify(updatedCartItems));
     } else {
       // Se o item não existe no carrinho, adiciona o item com a quantidade informada
-      const newCartItem = { ...product, qty: quantity };
+      const newCartItem = { ...product, quantity };
       const updatedCartItems = [...cartItems, newCartItem];
       setCartItems(updatedCartItems);
       localStorage.setItem('cart', JSON.stringify(updatedCartItems));
@@ -38,7 +38,7 @@ function CartContextProvider({ children }) {
 
   const getTotalPrice = () => {
     const result = cartItems
-      .reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0);
+      .reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
     return result.toFixed(2);
   };
 

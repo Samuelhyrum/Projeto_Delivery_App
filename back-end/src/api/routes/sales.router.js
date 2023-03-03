@@ -1,7 +1,6 @@
 const express = require('express');
 
 const router = express.Router();
-
 const { 
     create, 
     findAll, 
@@ -12,9 +11,10 @@ const {
     remove,
     getByStatus,
 } = require('../controllers/sales.controller');
+const jwtValidate = require('../auth/jwtValidate');
 
 router.get('/', findAll);
-router.post('/', create);
+router.post('/', jwtValidate, create);
 router.get('/:id', getById);
 router.get('/seller/:id', getSalesBySellerId);
 router.get('/user/:id', getSalesByUserId);
