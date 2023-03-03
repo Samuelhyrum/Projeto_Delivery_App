@@ -5,6 +5,7 @@ import './App.css';
 import Products from './pages/Products';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
+import CartContextProvider from './contexts/CartContext';
 
 function App() {
   return (
@@ -13,8 +14,10 @@ function App() {
         <Redirect to="/login" />
       </Route>
       <Route exact path="/login" component={ Login } />
-      <Route exact path="/customer/products" component={ Products } />
-      <Route exact path="/customer/checkout" component={ Checkout } />
+      <CartContextProvider>
+        <Route exact path="/customer/products" component={ Products } />
+        <Route exact path="/customer/checkout" component={ Checkout } />
+      </CartContextProvider>
       <Route exact path="/register" component={ Register } />
     </Switch>
   );
