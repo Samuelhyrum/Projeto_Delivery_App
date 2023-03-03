@@ -49,19 +49,44 @@ const create = async ({ sale, products }) => {
 
 const findAll = async () => {
     const result = await Sale.findAll();
-    return result;
+    const sales = await sequelize.transaction(async (_t) => {
+        const salesPromisse = result.map(async (sale) => getById(sale.dataValues.id));
+        return Promise.all(salesPromisse);
+    });
+    return sales;
 };
 
 const getSalesBySellerId = async (sellerId) => {
     const result = await Sale.findAll({ where: { sellerId } });
     if (result.length <= 0) return { type: 'ID_NOT_FOUND', message: 'Seller id not found' };
-    return result;
+
+    const sales = await sequelize.transaction(async (_t) => {
+        const salesPromisse = result.map(async (sale) => getById(sale.dataValues.id));
+        return Promise.all(salesPromisse);
+    });
+    return sales;
 };
 
 const getSalesByUserId = async (userId) => {
     const result = await Sale.findAll({ where: { userId } });
     if (result.length <= 0) return { type: 'ID_NOT_FOUND', message: 'User id not found' };
-    return result;
+
+    const sales = await sequelize.transaction(async (_t) => {
+        const salesPromisse = result.map(async (sale) => getById(sale.dataValues.id));
+        return Promise.all(salesPromisse);
+    });
+    return sales;
+};
+
+const getByStatus = async (status) => {
+    const result = await Sale.findAll({ where: { status } });
+    if (result.length <= 0) return { type: 'STATUS_NOT_FOUND', message: 'Status not found' };
+
+    const sales = await sequelize.transaction(async (_t) => {
+        const salesPromisse = result.map(async (sale) => getById(sale.dataValues.id));
+        return Promise.all(salesPromisse);
+    });
+    return sales;
 };
 
 const update = async (id, sale) => {
@@ -76,12 +101,6 @@ const remove = async (id) => {
     if (!result) return { type: 'ID_NOT_FOUND', message: 'Id not found' };
     const removed = await Sale.destroy({ where: { id } });
     return removed;
-};
-
-const getByStatus = async (status) => {
-    const result = await Sale.findAll({ where: { status } });
-    if (result.length <= 0) return { type: 'STATUS_NOT_FOUND', message: 'Status not found' };
-    return result;
 };
 
 module.exports = { 
