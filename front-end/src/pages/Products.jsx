@@ -55,14 +55,14 @@ export default function Products() {
       <button
         type="button"
         onClick={ () => handleAddToCart(p, (
-          cartItems.find((i) => i.id === p.id)?.qty || 0) + 1) }
+          cartItems.find((i) => i.id === p.id)?.quantity || 0) + 1) }
         data-testid={ `customer_products__button-card-add-item-${p.id}` }
       >
         +
       </button>
       <input
         type="number"
-        value={ cartItems.find((item) => item.id === p.id)?.qty || 0 }
+        value={ cartItems.find((item) => item.id === p.id)?.quantity || 0 }
         min="0"
         data-testid={ `customer_products__input-card-quantity-${p.id}` }
         onFocus={ (e) => e.target.select() }
@@ -74,7 +74,7 @@ export default function Products() {
       <button
         type="button"
         onClick={ () => handleAddToCart(p, (
-          cartItems.find((item) => item.id === p.id)?.qty || 0) - 1) }
+          cartItems.find((item) => item.id === p.id)?.quantity || 0) - 1) }
         data-testid={ `customer_products__button-card-rm-item-${p.id}` }
       >
         -

@@ -5,6 +5,7 @@ import './App.css';
 import Products from './pages/Products';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
+import OrderDetails from './pages/OrderDetails';
 import CartContextProvider from './contexts/CartContext';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <CartContextProvider>
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/checkout" component={ Checkout } />
+        <Route exact path="/customer/orders/:id" component={ OrderDetails } />
       </CartContextProvider>
     </Switch>
   );

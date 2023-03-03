@@ -1,8 +1,75 @@
-import React, { useContext } from 'react';
+import Swal from 'sweetalert';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import { CartContext } from '../contexts/CartContext';
 
 export default function Checkout() {
   const { cartItems, totalPrice, handleAddToCart } = useContext(CartContext);
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
+  const [userSellers, setUserSellers] = useState([]);
+  const [sellerId, setSellerId] = useState('');
+  const history = useHistory();
+
+  const handleChange = ({ target }) => {
+    const { value, type, name } = target;
+    if (type === 'text') setDeliveryAddress(value);
+    if (type === 'number') setDeliveryNumber(value);
+    if (name === 'seller') setSellerId(parseInt(value, 10));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const { email, token } = user;
+
+      const { data: allUsers } = await axios.get('http://localhost:3001/users');
+      const { id: userId } = allUsers.find((userDb) => userDb.email === email);
+
+      const copyCart = [...cartItems];
+      const arrayWithoutUrlImg = copyCart.map((product) => {
+        const { urlImage: _urlImage, ...objectWithoutUrlImg } = product;
+        return objectWithoutUrlImg;
+      });
+
+      const data = {
+        sale: {
+          userId,
+          sellerId: sellerId || userSellers[0].id,
+          totalPrice: totalPrice.toString(),
+          deliveryAddress,
+          deliveryNumber,
+          status: 'Pendente',
+        },
+        products: [...arrayWithoutUrlImg],
+      };
+
+      const { data: { id } } = await axios.post('http://localhost:3001/sales', data, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      history.push(`/customer/orders/${id}`);
+    } catch (er) {
+      console.error(er);
+      Swal(`Oops! ocorreu um erro. Por favor, tente novamente mais tarde. ${er}`);
+    }
+  };
+
+  useEffect(() => {
+    const getUserSellers = async () => {
+      try {
+        const { data: allUsers } = await axios.get('http://localhost:3001/users');
+        const sellers = allUsers.filter((userDb) => userDb.role === 'seller');
+        setUserSellers(sellers);
+      } catch (er) {
+        console.error(er);
+      }
+    };
+    getUserSellers();
+  }, []);
 
   const allTds = cartItems.map((p, index) => (
     <tr key={ index }>
@@ -19,7 +86,7 @@ export default function Checkout() {
       <td
         data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
       >
-        { p.qty }
+        { p.quantity }
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
@@ -29,7 +96,7 @@ export default function Checkout() {
       <td
         data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
       >
-        { (parseFloat(p.price) * p.qty).toFixed(2).toString().replace('.', ',') }
+        { (parseFloat(p.price) * p.quantity).toFixed(2).toString().replace('.', ',') }
       </td>
       <td>
         <button
@@ -65,16 +132,36 @@ export default function Checkout() {
       >
         { totalPrice.toString().replace('.', ',') }
       </div>
-      <form>
+      <form
+        onSubmit={ (e) => handleSubmit(e) }
+      >
         Detalhe e Endereço para Entrega
         <label htmlFor="customer_checkout__select-seller">
           P. Vendedora Responsável
-          <select data-testid="customer_checkout__select-seller">
-            texto pra lint n reclamar
+          <select
+            data-testid="customer_checkout__select-seller"
+            name="seller"
+            onChange={ (e) => handleChange(e) }
+          >
+            { userSellers.map((seller, index) => (
+              <option key={ index } value={ seller.id }>
+                { seller.name }
+              </option>
+            )) }
           </select>
         </label>
-        <input type="text" data-testid="customer_checkout__input-address" />
-        <input type="number" data-testid="customer_checkout__input-address-number" />
+        <input
+          type="text"
+          value={ deliveryAddress }
+          onChange={ (e) => handleChange(e) }
+          data-testid="customer_checkout__input-address"
+        />
+        <input
+          type="number"
+          value={ deliveryNumber }
+          onChange={ (e) => handleChange(e) }
+          data-testid="customer_checkout__input-address-number"
+        />
         <button
           data-testid="customer_checkout__button-submit-order"
           type="submit"
