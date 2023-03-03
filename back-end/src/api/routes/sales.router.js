@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const { 
     create, 
@@ -11,7 +12,6 @@ const {
     getByStatus,
 } = require('../controllers/sales.controller');
 const jwtValidate = require('../auth/jwtValidate');
-
 
 router.get('/', findAll);
 router.post('/', jwtValidate, create);
