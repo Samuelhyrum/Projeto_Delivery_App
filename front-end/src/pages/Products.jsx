@@ -3,10 +3,10 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useHistory } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
+import Navbar from '../components/Navbar';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const [userName, setUserName] = useState('');
   const history = useHistory();
   const { cartItems, handleAddToCart, totalPrice } = useContext(CartContext);
 
@@ -28,8 +28,7 @@ export default function Products() {
         history.push('/login');
       }
       try {
-        const decodedToken = jwtDecode(user.token);
-        setUserName(decodedToken.name);
+        jwtDecode(user.token);
       } catch (err) {
         console.error(err);
         history.push('/login');
@@ -37,11 +36,6 @@ export default function Products() {
     };
     requireAuth();
   }, [history]);
-
-  const logout = () => {
-    localStorage.removeItem('user');
-    history.push('/login');
-  };
 
   const checkout = () => {
     history.push('/customer/checkout');
@@ -90,39 +84,26 @@ export default function Products() {
 
   return (
     <div>
-      <nav>
-        <div data-testid="customer_products__element-navbar-link-products" />
-        <div data-testid="customer_products__element-navbar-link-orders" />
-        <div data-testid="customer_products__element-navbar-user-full-name">
-          <p>{ userName }</p>
-        </div>
+      <div>
+        <Navbar />
         <button
-          data-testid="customer_products__element-navbar-link-logout"
           type="button"
-          onClick={ () => logout() }
+          onClick={ () => checkout() }
+          disabled={ cartItems.length < 1 }
+          // não entendi o pq dos 2 botões, além disso não sei qual tem que redirecionar para rota de checkout então vou deixar nos 2 até ser descoberto posteriormente
+          data-testid="customer_products__checkout-bottom-value"
         >
-          LOGOUT
+          { totalPrice.toString().replace('.', ',') }
         </button>
-        <div>
-          <button
-            type="button"
-            onClick={ () => checkout() }
-            disabled={ cartItems.length < 1 }
-            // não entendi o pq dos 2 botões, além disso não sei qual tem que redirecionar para rota de checkout então vou deixar nos 2 até ser descoberto posteriormente
-            data-testid="customer_products__checkout-bottom-value"
-          >
-            {`PREÇO TOTAL ${totalPrice.toString().replace('.', ',')}`}
-          </button>
-          <button
-            type="button"
-            disabled={ cartItems.length < 1 }
-            onClick={ () => checkout() }
-            data-testid="customer_products__button-cart"
-          >
-            { totalPrice.toString().replace('.', ',') }
-          </button>
-        </div>
-      </nav>
+        <button
+          type="button"
+          disabled={ cartItems.length < 1 }
+          onClick={ () => checkout() }
+          data-testid="customer_products__button-cart"
+        >
+          { totalPrice.toString().replace('.', ',') }
+        </button>
+      </div>
       { allProducts }
     </div>
   );
