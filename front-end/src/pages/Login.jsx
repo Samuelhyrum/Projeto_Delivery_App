@@ -13,6 +13,19 @@ export default function Login() {
   const [loginFailed, setLoginFailed] = useState(false);
   const history = useHistory();
 
+  useEffect(() => {
+    const checkLog = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+          history.push('/customer/products');
+        }
+      } catch (er) {
+        console.error(er);
+      }
+    };
+    checkLog();
+  });
   const handleChange = ({ target }) => {
     const { value, type } = target;
     if (type === 'email') return setEmail(value);
