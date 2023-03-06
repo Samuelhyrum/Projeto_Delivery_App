@@ -9,7 +9,7 @@ const {
     getById, 
     update, 
     remove, 
-    createWithRole
+    createWithRole,
 } = require('../controllers/users.controller');
 const jwtValidate = require('../auth/jwtValidate');
 
