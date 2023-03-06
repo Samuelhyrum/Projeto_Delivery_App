@@ -17,7 +17,10 @@ export default function Login() {
     const checkLog = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user.token && user.role !== 'administrator') {
+        if (user.token && user.role === 'seller') {
+          history.push('/seller/orders');
+        }
+        if (user.token && user.role === 'customer') {
           history.push('/customer/products');
         }
         history.push('/admin/manage');
@@ -52,7 +55,10 @@ export default function Login() {
       };
       // salva o objeto no localStorage
       localStorage.setItem('user', JSON.stringify(user));
-      if (user.role !== 'administrator') {
+      if (user.token && user.role === 'seller') {
+        history.push('/seller/orders');
+      }
+      if (user.token && user.role === 'customer') {
         history.push('/customer/products');
       }
       history.push('/admin/manage');
