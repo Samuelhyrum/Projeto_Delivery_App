@@ -6,8 +6,9 @@ import Products from './pages/Products';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';
-import CustomerProd from './pages/CustomerProd';
+import Orders from './pages/Orders';
 import CartContextProvider from './contexts/CartContext';
+import AdminManage from './pages/AdminManage';
 import SellerSales from './pages/SellerSales';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <Switch>
       <Route exact path="/register" component={ Register } />
       <Route exact path="/login" component={ Login } />
+      <Route exact path="/admin/manage" component={ AdminManage } />
       <Route exact path="/">
         <Redirect to="/login" />
       </Route>
@@ -22,7 +24,7 @@ function App() {
       <CartContextProvider>
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/checkout" component={ Checkout } />
-        <Route exact path="/customer/orders" component={ CustomerProd } />
+        <Route exact path="/customer/orders" component={ Orders } />
         <Route exact path="/customer/orders/:id" component={ OrderDetails } />
       </CartContextProvider>
     </Switch>

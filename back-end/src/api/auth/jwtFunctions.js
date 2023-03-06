@@ -12,8 +12,8 @@ const jwtConfig = {
   expiresIn: '7d',
 };
 
-const createToken = (userWithoutIdAndPassword) => {
-  const token = jwt.sign({ ...userWithoutIdAndPassword }, jwtKey, jwtConfig);
+const createToken = (userWithoutPassword) => {
+  const token = jwt.sign({ ...userWithoutPassword }, jwtKey, jwtConfig);
   return token;
 };
 

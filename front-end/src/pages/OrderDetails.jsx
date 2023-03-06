@@ -33,7 +33,7 @@ export default function OrderDetails() {
       }
     };
     getSalesByUser();
-  }, []);
+  }, [idPage]);
 
   const allTds = sales.map((s, index) => (
     <>

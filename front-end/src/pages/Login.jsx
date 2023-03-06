@@ -23,12 +23,16 @@ export default function Login() {
         if (user.token && user.role === 'customer') {
           history.push('/customer/products');
         }
+        if (user.token && user.role === 'administrator') {
+          history.push('/admin/manage');
+        }
       } catch (er) {
         console.error(er);
       }
     };
     checkLog();
-  });
+  }, [history]);
+
   const handleChange = ({ target }) => {
     const { value, type } = target;
     if (type === 'email') return setEmail(value);
@@ -53,12 +57,14 @@ export default function Login() {
       };
       // salva o objeto no localStorage
       localStorage.setItem('user', JSON.stringify(user));
-      const userLog = JSON.parse(localStorage.getItem('user'));
-      if (userLog.token && userLog.role === 'seller') {
+      if (user.token && user.role === 'seller') {
         history.push('/seller/orders');
       }
-      if (userLog.token && userLog.role === 'customer') {
+      if (user.token && user.role === 'customer') {
         history.push('/customer/products');
+      }
+      if (user.token && user.role === 'administrator') {
+        history.push('/admin/manage');
       }
     } catch (er) {
       console.error(er);

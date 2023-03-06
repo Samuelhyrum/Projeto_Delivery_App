@@ -15,7 +15,23 @@ export default function Register() {
   const [registerFailed, setRegisterFailed] = useState(false);
   const history = useHistory();
 
+  useEffect(() => {
+    const regex = /\S+@\S+\.\S+/;
+
+    const validateEmail = () => regex.test(email);
+    const validatePassword = () => password.length >= MIN_CHAR_PASSWORD;
+    const validateName = () => name.length >= MIN_CHAR_NAME;
+
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    const isNameValid = validateName();
+
+    if (isEmailValid && isPasswordValid && isNameValid) return setDisabled(false);
+    return setDisabled(true);
+  }, [name, email, password]);
+
   const handleChange = ({ target }) => {
+    setRegisterFailed(false);
     const { value, type } = target;
     if (type === 'email') return setEmail(value);
     if (type === 'password') return setPassword(value);
@@ -46,22 +62,6 @@ export default function Register() {
       setRegisterFailed(true);
     }
   };
-
-  useEffect(() => {
-    setRegisterFailed(false);
-    const regex = /\S+@\S+\.\S+/;
-
-    const validateEmail = () => regex.test(email);
-    const validatePassword = () => password.length >= MIN_CHAR_PASSWORD;
-    const validateName = () => name.length >= MIN_CHAR_NAME;
-
-    const isEmailValid = validateEmail();
-    const isPasswordValid = validatePassword();
-    const isNameValid = validateName();
-
-    if (isEmailValid && isPasswordValid && isNameValid) return setDisabled(false);
-    return setDisabled(true);
-  }, [name, email, password]);
 
   return (
     <div>

@@ -7,6 +7,13 @@ const create = async (req, res) => {
   return res.status(201).json(token);
 };
 
+const createWithRole = async (req, res) => {
+  const { name, email, password, role } = req.body;
+  const token = await usersService.createWithRole(name, email, password, role);
+  if (token.type) return res.status(409).json({ message: token.message });
+  return res.status(201).json(token);
+};
+
 const findAll = async (req, res) => {
   const users = await usersService.findAll();
   return res.status(200).json(users);
@@ -48,4 +55,5 @@ module.exports = {
   getById,
   update,
   remove,
+  createWithRole,
 };

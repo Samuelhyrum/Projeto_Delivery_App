@@ -12,6 +12,19 @@ export default function Checkout() {
   const [sellerId, setSellerId] = useState('');
   const history = useHistory();
 
+  useEffect(() => {
+    const getUserSellers = async () => {
+      try {
+        const { data: allUsers } = await axios.get('http://localhost:3001/users');
+        const sellers = allUsers.filter((userDb) => userDb.role === 'seller');
+        setUserSellers(sellers);
+      } catch (er) {
+        console.error(er);
+      }
+    };
+    getUserSellers();
+  }, []);
+
   const handleChange = ({ target }) => {
     const { value, type, name } = target;
     if (type === 'text') setDeliveryAddress(value);
@@ -57,19 +70,6 @@ export default function Checkout() {
       Swal(`Oops! ocorreu um erro. Por favor, tente novamente mais tarde. ${er}`);
     }
   };
-
-  useEffect(() => {
-    const getUserSellers = async () => {
-      try {
-        const { data: allUsers } = await axios.get('http://localhost:3001/users');
-        const sellers = allUsers.filter((userDb) => userDb.role === 'seller');
-        setUserSellers(sellers);
-      } catch (er) {
-        console.error(er);
-      }
-    };
-    getUserSellers();
-  }, []);
 
   const allTds = cartItems.map((p, index) => (
     <tr key={ index }>
