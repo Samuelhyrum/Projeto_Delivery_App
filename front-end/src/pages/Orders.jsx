@@ -23,7 +23,7 @@ export default function CustomerProd() {
     getSaleByUser();
   }, []);
 
-  const DetailsProducts = (id) => {
+  const detailsProducts = (id) => {
     history.push(`/customer/orders/${id}`);
   };
 
@@ -32,7 +32,7 @@ export default function CustomerProd() {
     <div key={ sale.id }>
       <button
         type="button"
-        onClick={ () => DetailsProducts(sale.id) }
+        onClick={ () => detailsProducts(sale.id) }
       >
         <p data-testid={ `customer_orders__element-order-id-${sale.id}` }>
           {sale.id}

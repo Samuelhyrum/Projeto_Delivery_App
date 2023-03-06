@@ -17,15 +17,17 @@ export default function Login() {
     const checkLog = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user.token) {
+        if (user.token && user.role !== 'administrator') {
           history.push('/customer/products');
         }
+        history.push('/admin/manage');
       } catch (er) {
         console.error(er);
       }
     };
     checkLog();
-  });
+  }, [history]);
+
   const handleChange = ({ target }) => {
     const { value, type } = target;
     if (type === 'email') return setEmail(value);
@@ -50,7 +52,10 @@ export default function Login() {
       };
       // salva o objeto no localStorage
       localStorage.setItem('user', JSON.stringify(user));
-      history.push('/customer/products');
+      if (user.role !== 'administrator') {
+        history.push('/customer/products');
+      }
+      history.push('/admin/manage');
     } catch (er) {
       console.error(er);
       setLoginFailed(true);
