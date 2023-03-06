@@ -32,7 +32,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <Link to="/customes/products">
+        <Link to="/customer/products">
           <div data-testid="customer_products__element-navbar-user-full-name">
             <p>{ userName }</p>
           </div>

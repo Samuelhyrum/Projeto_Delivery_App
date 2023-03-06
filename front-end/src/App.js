@@ -17,10 +17,10 @@ function App() {
       <Route exact path="/">
         <Redirect to="/login" />
       </Route>
-      <Route exact path="/customer/orders" component={ CustomerProd } />
       <CartContextProvider>
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/checkout" component={ Checkout } />
+        <Route exact path="/customer/orders" component={ CustomerProd } />
         <Route exact path="/customer/orders/:id" component={ OrderDetails } />
       </CartContextProvider>
     </Switch>
