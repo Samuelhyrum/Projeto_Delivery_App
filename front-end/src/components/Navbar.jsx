@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 export default function Navbar() {
   const [userName, setUserName] = useState();
+  const [sellerUser, setSellerUser] = useState(true);
   const history = useHistory();
 
   const logout = () => {
@@ -12,6 +13,9 @@ export default function Navbar() {
 
   useEffect(() => {
     const user = localStorage.getItem('user');
+    if (user.role === 'seller') {
+      setSellerUser(false);
+    }
     const userObj = JSON.parse(user);
     const { name } = userObj;
     setUserName(name);
@@ -25,12 +29,13 @@ export default function Navbar() {
             Produtos
           </div>
         </Link>
-
-        <Link to="/customer/orders">
-          <div data-testid="customer_products__element-navbar-link-orders">
-            Meus Pedidos
-          </div>
-        </Link>
+        {sellerUser && (
+          <Link to="/customer/orders">
+            <div data-testid="customer_products__element-navbar-link-orders">
+              Meus Pedidos
+            </div>
+          </Link>
+        )}
 
         <Link to="/customer/products">
           <div data-testid="customer_products__element-navbar-user-full-name">
