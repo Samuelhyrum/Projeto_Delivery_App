@@ -9,6 +9,7 @@ import OrderDetails from './pages/OrderDetails';
 import CustomerProd from './pages/CustomerProd';
 import CartContextProvider from './contexts/CartContext';
 import SellerSales from './pages/SellerSales';
+import SalesSellerDetails from './pages/SalesSellerDetails';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Redirect to="/login" />
       </Route>
       <Route exact path="/seller/orders" component={ SellerSales } />
+      <Route exact path="/seller/orders/:id" component={ SalesSellerDetails } />
       <CartContextProvider>
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/checkout" component={ Checkout } />
