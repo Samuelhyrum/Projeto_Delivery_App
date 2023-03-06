@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';
 import CustomerProd from './pages/CustomerProd';
 import CartContextProvider from './contexts/CartContext';
+import SellerSales from './pages/SellerSales';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route exact path="/">
         <Redirect to="/login" />
       </Route>
+      <Route exact path="/seller/orders" component={ SellerSales } />
       <CartContextProvider>
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/checkout" component={ Checkout } />

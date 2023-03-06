@@ -17,7 +17,10 @@ export default function Login() {
     const checkLog = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user.token) {
+        if (user.token && user.role === 'seller') {
+          history.push('/seller/orders');
+        }
+        if (user.token && user.role === 'customer') {
           history.push('/customer/products');
         }
       } catch (er) {
@@ -50,7 +53,13 @@ export default function Login() {
       };
       // salva o objeto no localStorage
       localStorage.setItem('user', JSON.stringify(user));
-      history.push('/customer/products');
+      const userLog = JSON.parse(localStorage.getItem('user'));
+      if (userLog.token && userLog.role === 'seller') {
+        history.push('/seller/orders');
+      }
+      if (userLog.token && userLog.role === 'customer') {
+        history.push('/customer/products');
+      }
     } catch (er) {
       console.error(er);
       setLoginFailed(true);
