@@ -23,7 +23,9 @@ export default function Login() {
         if (user.token && user.role === 'customer') {
           history.push('/customer/products');
         }
-        history.push('/admin/manage');
+        if (user.token && user.role === 'administrator') {
+          history.push('/admin/manage');
+        }
       } catch (er) {
         console.error(er);
       }
@@ -61,7 +63,9 @@ export default function Login() {
       if (user.token && user.role === 'customer') {
         history.push('/customer/products');
       }
-      history.push('/admin/manage');
+      if (user.token && user.role === 'administrator') {
+        history.push('/admin/manage');
+      }
     } catch (er) {
       console.error(er);
       setLoginFailed(true);
