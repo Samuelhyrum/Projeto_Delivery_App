@@ -3,6 +3,12 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
+const DataIdStat = 'seller_order_details__element-order-details-label-delivery-status';
+const DataOrdNum = 'seller_order_details__element-order-table-item-number-';
+const DataUnitPr = 'seller_order_details__element-order-table-unit-price-';
+const DataSubTot = 'seller_order_details__element-order-table-sub-total-';
+const DataQuanti = 'seller_order_details__element-order-table-quantity-';
+
 export default function SalesSellerDetails() {
   const [sales, setSales] = useState([]);
   const { id: idPage } = useParams();
@@ -12,7 +18,8 @@ export default function SalesSellerDetails() {
       try {
         const result = await axios.get(`http://localhost:3001/sales/${idPage}`);
         const { data } = result;
-        setSales(data);
+        const dataArray = [data];
+        setSales(dataArray);
       } catch (er) {
         console.error(er);
       }
@@ -20,51 +27,90 @@ export default function SalesSellerDetails() {
     getSaleBySeller();
   }, []);
   console.log(sales);
-  //   const saleByIdSeller = Promise.all(sales.products.map((p, index2) => (
-  //     <tr key={ `${sales.id}-${index2}` }>
-  //       <td
-  //         data-testid={ `seller_order_details__element-order-table-item-number-${index2}` }
-  //       >
-  //         {index2 === 0 ? 1 : index2 + 1}
-  //       </td>
-  //       <td
-  //         data-testid={ `seller_order_details__element-order-table-name-${index2}` }
-  //       >
-  //         {p.productName}
-  //       </td>
-  //       <td
-  //         data-testid={ `seller_order_details__element-order-table-quantity-${index2}` }
-  //       >
-  //         {p.quantity}
-  //       </td>
-  //       <td
-  //         data-testid={ `seller_order_details__element-order-table-unit-price-${index2}` }
-  //       >
-  //         {p.price.toString().replace('.', ',')}
-  //       </td>
-  //       <td
-  //         data-testid={ `seller_order_details__element-order-table-sub-total-${index2}` }
-  //       >
-  //         {(parseFloat(p.price) * p.quantity).toFixed(2).toString().replace('.', ',')}
-  //       </td>
-  //       { index2 === 0 && (
-  //         <td>
-  //           <div
-  //             data-testid="seller_order_details__element-order-total-price"
-  //           >
-  //             TOTAL:
-  //             { sales.totalPrice.toString().replace('.', ',') }
-  //           </div>
-  //         </td>
-  //       )}
-  //     </tr>
-  //   )));
+  const allTds = sales.map((s, index) => (
+    <>
+      <tr key={ `${s.id}-${index}` }>
+        <td
+          data-testid="seller_order_details__element-order-details-label-order-id"
+        >
+          NÚMERO DO PEDIDO:
+          { s.id }
+        </td>
+        <td
+          data-testid="seller_order_details__element-order-details-label-order-date"
+        >
+          DATA DO PEDIDO:
+          {new Date(s.saleDate.split('T')[0])
+            .toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+        </td>
+        <td
+          data-testid={ `${DataIdStat}` }
+        >
+          { s.status }
+        </td>
+        <td>
+          <button
+            type="button"
+            data-testid="seller_order_details__button-preparing-check"
+          >
+            PREPARAR PEDIDO
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            data-testid="seller_order_details__button-dispatch-check"
+            disabled
+          >
+            SAIU PRA ENTREGA
+          </button>
+        </td>
+      </tr>
+
+      { s.products.map((p, index2) => (
+        <tr key={ `${s.id}-${index2}` }>
+          <td
+            data-testid={ `${DataOrdNum}${index2}` }
+          >
+            {index2 === 0 ? 1 : index2 + 1}
+          </td>
+          <td
+            data-testid={ `seller_order_details__element-order-table-name-${index2}` }
+          >
+            {p.productName}
+          </td>
+          <td
+            data-testid={ `${DataQuanti}${index2}` }
+          >
+            {p.quantity}
+          </td>
+          <td
+            data-testid={ `${DataUnitPr}${index2}` }
+          >
+            {p.price.toString().replace('.', ',')}
+          </td>
+          <td
+            data-testid={ `${DataSubTot}${index2}` }
+          >
+            {(parseFloat(p.price) * p.quantity).toFixed(2).toString().replace('.', ',')}
+          </td>
+          { index2 === 0 && (
+            <td>
+              <div data-testid="seller_order_details__element-order-total-price">
+                TOTAL:
+                { s.totalPrice.toString().replace('.', ',') }
+              </div>
+            </td>
+          )}
+        </tr>
+      )) }
+    </>
+  ));
 
   return (
     <div>
       <Navbar />
       <h1>Detalhe do Pedido</h1>
-
       <table>
         <thead>
           <tr>
@@ -76,47 +122,7 @@ export default function SalesSellerDetails() {
           </tr>
         </thead>
         <tbody>
-          {
-            sales.products.map((p, index2) => (
-              <tr key={ `${sales.id}-${index2}` }>
-                <td
-                  data-testid={ `seller_order_details__element-order-table-item-number-${index2}` }
-                >
-                  {index2 === 0 ? 1 : index2 + 1}
-                </td>
-                <td
-                  data-testid={ `seller_order_details__element-order-table-name-${index2}` }
-                >
-                  {p.productName}
-                </td>
-                <td
-                  data-testid={ `seller_order_details__element-order-table-quantity-${index2}` }
-                >
-                  {p.quantity}
-                </td>
-                <td
-                  data-testid={ `seller_order_details__element-order-table-unit-price-${index2}` }
-                >
-                  {p.price.toString().replace('.', ',')}
-                </td>
-                <td
-                  data-testid={ `seller_order_details__element-order-table-sub-total-${index2}` }
-                >
-                  {(parseFloat(p.price) * p.quantity).toFixed(2).toString().replace('.', ',')}
-                </td>
-                { index2 === 0 && (
-                  <td>
-                    <div
-                      data-testid="seller_order_details__element-order-total-price"
-                    >
-                      TOTAL:
-                      { sales.totalPrice.toString().replace('.', ',') }
-                    </div>
-                  </td>
-                )}
-              </tr>
-            ))
-          }
+          {allTds}
         </tbody>
       </table>
     </div>
