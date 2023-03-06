@@ -17,7 +17,7 @@ export default function Login() {
     const checkLog = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
+        if (user.token) {
           history.push('/customer/products');
         }
       } catch (er) {
