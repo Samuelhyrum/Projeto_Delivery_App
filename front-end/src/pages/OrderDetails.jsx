@@ -33,7 +33,16 @@ export default function OrderDetails() {
       }
     };
     getSalesByUser();
-  }, [idPage]);
+  }, [idPage, sales]);
+
+  const handleUpdateStatus = async (status) => {
+    const data = { status };
+    try {
+      await axios.put(`http://localhost:3001/sales/${idPage}`, data);
+    } catch (er) {
+      console.error(er);
+    }
+  };
 
   const allTds = sales.map((s, index) => (
     <>
@@ -66,7 +75,8 @@ export default function OrderDetails() {
           <button
             type="button"
             data-testid="customer_order_details__button-delivery-check"
-            disabled
+            onClick={ () => handleUpdateStatus('Entregue') }
+            disabled={ s.status !== 'Em Trânsito' }
           >
             MARCAR COMO ENTREGUE
           </button>
