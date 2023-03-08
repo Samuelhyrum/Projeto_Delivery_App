@@ -22,7 +22,6 @@ export default function AdminManage() {
       const user = JSON.parse(localStorage.getItem('user'));
       if (!user || !user.token || user.role !== 'administrator') {
         history.push('/login');
-        console.log('teste');
       }
       try {
         jwtDecode(user.token);
@@ -38,7 +37,7 @@ export default function AdminManage() {
         const nonAdminUsers = data.filter((u) => u.role !== 'administrator');
         setUsers(nonAdminUsers);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
     getAllUsers();

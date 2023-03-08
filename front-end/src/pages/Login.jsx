@@ -14,7 +14,7 @@ export default function Login() {
   const history = useHistory();
 
   useEffect(() => {
-    const checkLog = async () => {
+    const checkLogin = () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user.token && user.role === 'seller') {
@@ -30,7 +30,7 @@ export default function Login() {
         console.error(er);
       }
     };
-    checkLog();
+    checkLogin();
   }, [history]);
 
   const handleChange = ({ target }) => {

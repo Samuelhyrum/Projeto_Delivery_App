@@ -25,8 +25,17 @@ export default function SalesSellerDetails() {
       }
     };
     getSaleBySeller();
-  }, []);
-  console.log(sales);
+  }, [idPage, sales]);
+
+  const handleUpdateStatus = async (status) => {
+    const data = { status };
+    try {
+      await axios.put(`http://localhost:3001/sales/${idPage}`, data);
+    } catch (er) {
+      console.error(er);
+    }
+  };
+
   const allTds = sales.map((s, index) => (
     <>
       <tr key={ `${s.id}-${index}` }>
@@ -48,23 +57,29 @@ export default function SalesSellerDetails() {
         >
           { s.status }
         </td>
+
         <td>
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
+            onClick={ () => handleUpdateStatus('Preparando') }
+            disabled={ s.status !== 'Pendente' }
           >
             PREPARAR PEDIDO
           </button>
         </td>
+
         <td>
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled
+            onClick={ () => handleUpdateStatus('Em Trânsito') }
+            disabled={ s.status !== 'Preparando' }
           >
             SAIU PRA ENTREGA
           </button>
         </td>
+
       </tr>
 
       { s.products.map((p, index2) => (
