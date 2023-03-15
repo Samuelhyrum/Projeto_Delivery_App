@@ -1,0 +1,72 @@
+body {
+  text-align: center;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 50px auto;
+  padding: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+th,
+td {
+  text-align: center;
+  padding: 10px;
+  width: 100px; /* Define a largura igual para todas as células */
+  height: 50px; /* Define a altura igual para todas as células */
+}
+
+.price-total {
+  position: absolute;
+  right: 90px;
+  background-color: #4e8cff;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.card-form {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 500px; /* mesma largura máxima da tabela */
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-form label {
+  margin-bottom: 20px;
+}
+
+.card-form select {
+  margin-left: 10px;
+}
+
+.card-form input {
+  margin: 10px auto;
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.card-form button {
+  margin: 20px auto;
+  padding: 10px 20px;
+  width: 250px;
+  background-color: #4e8cff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

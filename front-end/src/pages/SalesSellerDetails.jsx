@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import '../styles/OrderDetails.css';
 
 const DataIdStat = 'seller_order_details__element-order-details-label-delivery-status';
 const DataOrdNum = 'seller_order_details__element-order-table-item-number-';
@@ -42,15 +43,13 @@ export default function SalesSellerDetails() {
         <td
           data-testid="seller_order_details__element-order-details-label-order-id"
         >
-          NÚMERO DO PEDIDO:
-          { s.id }
+          { `NUM. DO PEDIDO: ${s.id}` }
         </td>
         <td
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
-          DATA DO PEDIDO:
-          {new Date(s.saleDate.split('T')[0])
-            .toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+          { `DATA DO PEDIDO: ${new Date(s.saleDate.split('T')[0])
+            .toLocaleDateString('pt-BR', { timeZone: 'UTC' })}` }
         </td>
         <td
           data-testid={ `${DataIdStat}` }
@@ -61,6 +60,7 @@ export default function SalesSellerDetails() {
         <td>
           <button
             type="button"
+            className="preparing-button"
             data-testid="seller_order_details__button-preparing-check"
             onClick={ () => handleUpdateStatus('Preparando') }
             disabled={ s.status !== 'Pendente' }
@@ -72,6 +72,7 @@ export default function SalesSellerDetails() {
         <td>
           <button
             type="button"
+            className="dispatch-button"
             data-testid="seller_order_details__button-dispatch-check"
             onClick={ () => handleUpdateStatus('Em Trânsito') }
             disabled={ s.status !== 'Preparando' }
@@ -111,9 +112,11 @@ export default function SalesSellerDetails() {
           </td>
           { index2 === 0 && (
             <td>
-              <div data-testid="seller_order_details__element-order-total-price">
-                TOTAL:
-                { s.totalPrice.toString().replace('.', ',') }
+              <div
+                className="price-total-details"
+                data-testid="seller_order_details__element-order-total-price"
+              >
+                { `TOTAL: ${s.totalPrice.toString().replace('.', ',')}` }
               </div>
             </td>
           )}

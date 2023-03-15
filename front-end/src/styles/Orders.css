@@ -1,0 +1,28 @@
+.card-container-order {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.card-order {
+  width: calc(50% - 30px);
+  height: 120px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.card-order p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.card-order button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

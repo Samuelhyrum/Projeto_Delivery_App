@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import '../styles/Navbar.css';
 
 export default function Navbar() {
   const [userName, setUserName] = useState();
@@ -29,47 +30,54 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div>
-      <nav>
+    <nav>
+      <div className="nav-links">
         {customerUser && (
-          <Link to="/customer/products">
-            <div data-testid="customer_products__element-navbar-link-products">
-              Produtos
-            </div>
+          <Link
+            to="/customer/products"
+            className="nav-link"
+            activeClassName="nav-link-active"
+          >
+            Produtos
           </Link>
         )}
         {customerUser && (
-          <Link to="/customer/orders">
-            <div data-testid="customer_products__element-navbar-link-orders">
-              Meus Pedidos
-            </div>
+          <Link
+            to="/customer/orders"
+            className="nav-link"
+            activeClassName="nav-link-active"
+          >
+            Meus Pedidos
           </Link>
         )}
         {sellerUser && (
-          <Link to="/seller/orders">
-            <div data-testid="customer_products__element-navbar-link-orders">
-              Meus Pedidos
-            </div>
+          <Link
+            to="/seller/orders"
+            className="nav-link"
+            activeClassName="nav-link-active"
+          >
+            Meus Pedidos
           </Link>
         )}
         {administratorUser && (
-          <Link to="/admin/manage">
-            <div data-testid="customer_products__element-navbar-link-orders">
-              GERENCIAR USUÁRIOS
-            </div>
+          <Link
+            to="/admin/manage"
+            className="nav-link"
+            activeClassName="nav-link-active"
+          >
+            GERENCIAR USUÁRIOS
           </Link>
         )}
-        <div data-testid="customer_products__element-navbar-user-full-name">
-          <p>{userName}</p>
-        </div>
-        <button
-          data-testid="customer_products__element-navbar-link-logout"
-          type="button"
-          onClick={ () => logout() }
-        >
-          LOGOUT
-        </button>
-      </nav>
-    </div>
+      </div>
+      <div className="nav-user">{userName}</div>
+      <button
+        id="navbar"
+        type="button"
+        className="nav-logout"
+        onClick={ () => logout() }
+      >
+        sair
+      </button>
+    </nav>
   );
 }

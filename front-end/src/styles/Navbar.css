@@ -1,0 +1,56 @@
+body {
+  overflow-x: hidden;
+}
+
+nav {
+  background-color: #ff6666;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: #ffffff;
+  font-size: 24px;
+  margin-left: 32px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-link-active {
+  text-decoration: underline;
+}
+
+nav .nav-logout {
+  background-color: #ffffff;
+  border: none;
+  margin-right: 16px; /* adiciona uma margem à direita */
+  border-radius: 8px;
+  color: #333333;
+  font-size: 18px;
+  text-transform: uppercase;
+  width: 120px;
+}
+
+.nav-logout:hover {
+  background-color: #dddddd;
+  cursor: pointer;
+}
+
+.nav-user {
+  color: #ffffff;
+  font-size: 24px;
+  margin-left: auto;
+  white-space: nowrap;
+  margin-right: 16px; /* diminui a margem à direita */
+}
