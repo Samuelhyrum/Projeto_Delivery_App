@@ -3,8 +3,10 @@ import jwtDecode from 'jwt-decode';
 // jwt não funciona no navegador, se usar a aplicação quebra.
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/Login.css';
 
 const MIN_CHAR_PASSWORD = 6;
+const TIME_MSG_ERROR = 5000;
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -39,6 +41,13 @@ export default function Login() {
     return setPassword(value);
   };
 
+  const handleLoginFailed = () => {
+    setLoginFailed(true);
+    setTimeout(() => {
+      setLoginFailed(false);
+    }, TIME_MSG_ERROR);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { email, password };
@@ -68,7 +77,7 @@ export default function Login() {
       }
     } catch (er) {
       console.error(er);
-      setLoginFailed(true);
+      handleLoginFailed();
     }
   };
 
@@ -121,7 +130,14 @@ export default function Login() {
         </button>
       </form>
       { loginFailed
-      && <p data-testid="common_login__element-invalid-email">Email não registrado!</p>}
+      && (
+        <p
+          className="login-failed"
+          data-testid="common_login__element-invalid-email"
+        >
+          Email não registrado!
+        </p>
+      )}
     </div>
   );
 }

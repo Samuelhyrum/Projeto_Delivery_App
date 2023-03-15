@@ -1,0 +1,84 @@
+.delivery-button {
+  background-color: #4e8cff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.delivery-button:enabled {
+  background-color: #4e8cff;
+  color: #fff;
+}
+
+.delivery-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: white;
+}
+
+.delivery-button:hover:enabled {
+  background-color: #3467d1;
+}
+
+.preparing-button {
+  background-color: #4e8cff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.preparing-button:enabled {
+  background-color: #4e8cff;
+  color: #fff;
+}
+
+.preparing-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: white;
+}
+
+.preparing-button:hover:enabled {
+  background-color: #3467d1;
+}
+
+.dispatch-button {
+  background-color: #4e8cff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dispatch-button:enabled {
+  background-color: #4e8cff;
+  color: #fff;
+}
+
+.dispatch-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: white;
+}
+
+.dispatch-button:hover:enabled {
+  background-color: #3467d1;
+}
+
+.price-total-details {
+  position: absolute;
+  bottom: 0;
+  right: 90px;
+  background-color: #4e8cff;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+}

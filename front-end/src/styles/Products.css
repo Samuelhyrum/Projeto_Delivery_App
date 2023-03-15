@@ -1,0 +1,103 @@
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(25% - 20px);
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.card img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
+
+.card h2 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.card p {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card button {
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  background-color: #0077cc;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.card input[type="number"] {
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+.card input[type="number"]::-webkit-inner-spin-button,
+.card input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.card .card-btn-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 195px;
+  height: 20px;
+  line-height: 30px;
+  white-space: nowrap;
+  background-color: #009933; /* altera a cor de fundo para um tom de verde mais escuro */
+  border-radius: 5px;
+}
+
+
+.checkout-container button {
+  color: #fff;
+  font-size: 14px;
+  width: 100px;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.checkout-button:last-child {
+  margin-right: 0;
+}

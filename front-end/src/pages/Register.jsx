@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import '../styles/Register.css';
 
 const MIN_CHAR_NAME = 12;
 const MIN_CHAR_PASSWORD = 6;
@@ -96,7 +97,13 @@ export default function Register() {
         </button>
       </form>
       { registerFailed
-      && <p data-testid="common_register__element-invalid_register">{MSG_ERROR}</p> }
+      && (
+        <p
+          className="register-failed"
+          data-testid="common_register__element-invalid_register"
+        >
+          {MSG_ERROR}
+        </p>) }
     </div>
   );
 }

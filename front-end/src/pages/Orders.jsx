@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import '../styles/Orders.css';
 
 export default function CustomerProd() {
   const [sales, setSales] = useState([]);
@@ -29,7 +30,7 @@ export default function CustomerProd() {
 
   const salesUser = sales.map((sale) => (
 
-    <div key={ sale.id }>
+    <div className="card-order" key={ sale.id }>
       <button
         type="button"
         onClick={ () => detailsProducts(sale.id) }
@@ -57,7 +58,9 @@ export default function CustomerProd() {
   return (
     <div>
       <Navbar />
-      {salesUser}
+      <div className="card-container-order">
+        {salesUser}
+      </div>
     </div>
   );
 }

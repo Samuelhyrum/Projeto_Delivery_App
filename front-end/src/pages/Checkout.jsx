@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { CartContext } from '../contexts/CartContext';
+import Navbar from '../components/Navbar';
+import '../styles/Checkout.css';
 
 export default function Checkout() {
   const { cartItems, totalPrice, handleAddToCart } = useContext(CartContext);
@@ -98,7 +100,7 @@ export default function Checkout() {
       >
         { (parseFloat(p.price) * p.quantity).toFixed(2).toString().replace('.', ',') }
       </td>
-      <td>
+      <td c>
         <button
           onClick={ () => handleAddToCart(p, 0) }
           data-testid={ `customer_checkout__element-order-table-remove-${index}` }
@@ -112,7 +114,9 @@ export default function Checkout() {
 
   return (
     <div>
-      <table>
+      <Navbar />
+      <h2>Informações do pedido</h2>
+      <table className="table">
         <thead>
           <tr>
             <th>Item</th>
@@ -126,16 +130,18 @@ export default function Checkout() {
         <tbody>
           { allTds }
         </tbody>
+        <div
+          className="price-total"
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          { `PREÇO TOTAL: ${totalPrice.toString().replace('.', ',')}` }
+        </div>
       </table>
-      <div
-        data-testid="customer_checkout__element-order-total-price"
-      >
-        { totalPrice.toString().replace('.', ',') }
-      </div>
       <form
+        className="card-form"
         onSubmit={ (e) => handleSubmit(e) }
       >
-        Detalhe e Endereço para Entrega
+        <h2>Detalhe e Endereço para Entrega</h2>
         <label htmlFor="customer_checkout__select-seller">
           P. Vendedora Responsável
           <select
@@ -154,10 +160,12 @@ export default function Checkout() {
           type="text"
           value={ deliveryAddress }
           onChange={ (e) => handleChange(e) }
+          placeholder="rua exemplo"
           data-testid="customer_checkout__input-address"
         />
         <input
           type="number"
+          placeholder="500"
           value={ deliveryNumber }
           onChange={ (e) => handleChange(e) }
           data-testid="customer_checkout__input-address-number"

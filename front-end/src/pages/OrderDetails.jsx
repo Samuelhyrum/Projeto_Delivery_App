@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import '../styles/OrderDetails.css';
 
 const DataIdStat = 'customer_order_details__element-order-details-label-delivery-status';
 const DataOrdNum = 'customer_order_details__element-order-table-item-number-';
@@ -50,21 +51,18 @@ export default function OrderDetails() {
         <td
           data-testid="customer_order_details__element-order-details-label-order-id"
         >
-          NÚMERO DO PEDIDO:
-          { s.id }
+          { `NÚM. DO PEDIDO: ${s.id}` }
         </td>
         <td
           data-testid="customer_order_details__element-order-details-label-seller-name"
         >
-          P. Vend:
-          { s.sellerName }
+          { `P. Vend: ${s.sellerName}` }
         </td>
         <td
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
-          DATA DO PEDIDO:
-          {new Date(s.saleDate.split('T')[0])
-            .toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+          { `DATA DO PEDIDO: ${new Date(s.saleDate.split('T')[0])
+            .toLocaleDateString('pt-BR', { timeZone: 'UTC' })}` }
         </td>
         <td
           data-testid={ `${DataIdStat}${index}` }
@@ -74,6 +72,7 @@ export default function OrderDetails() {
         <td>
           <button
             type="button"
+            className="delivery-button"
             data-testid="customer_order_details__button-delivery-check"
             onClick={ () => handleUpdateStatus('Entregue') }
             disabled={ s.status !== 'Em Trânsito' }
@@ -112,9 +111,11 @@ export default function OrderDetails() {
           </td>
           { index2 === 0 && (
             <td>
-              <div data-testid="customer_order_details__element-order-total-price">
-                TOTAL:
-                { s.totalPrice.toString().replace('.', ',') }
+              <div
+                className="price-total-details"
+                data-testid="customer_order_details__element-order-total-price"
+              >
+                { `TOTAL: ${s.totalPrice.toString().replace('.', ',')}` }
               </div>
             </td>
           )}
@@ -126,7 +127,7 @@ export default function OrderDetails() {
   return (
     <div>
       <Navbar />
-      Detalhes do Pedido
+      <h2>Detalhes do Pedido</h2>
       <table>
         <thead>
           <tr>
