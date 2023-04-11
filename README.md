@@ -40,3 +40,41 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
   Agora é mãos à obra! Vamos começar?
 
 </details>
+
+<details>
+  <summary>
+    <strong>👷 Estruturação do projeto</strong>
+  </summary><br>
+
+  Para facilitar o entendimento, podemos dividir a aplicação em **4 fluxos principais**, **uma validação de status entre cliente e pessoa vendedora** e **cobertura de testes (`front-end` e `back-end`)**:
+
+- **Fluxo Comum** que compreende:
+  - (1) Tela de Login (`01login.test`);
+  - (2) Tela de Registro (`02register.test`).
+
+- **Fluxo do Cliente** que compreende: :
+  - (3) Tela de Produtos (`03customer_products.test`);
+  - (4) Tela de Checkout (`04customer_checkout.test`);
+  - (5) Tela de Pedidos (`05customer_orders.test`);
+  - (6) Tela de Detalhes do Pedido (`06customer_order_details.test`).
+
+- **Fluxo da Pessoa Vendedora** que compreende:
+  - (7) Tela de Pedidos (`07seller_orders.test`);
+  - (8) Tela de Detalhes/Controle do Pedido (`08seller_order_details.test`).
+
+- **Validação do Status do Pedido** que compreende:
+  - (9) Teste de status (`09customer_seller_status_sync.test`);
+
+- **Fluxo da Pessoa Administradora** que compreende:
+  - (10) Tela de gerenciamento de usuários (`11admin_manage_users.test`).
+
+- **Testes da aplicação** que compreende:
+  - (11) Testes de cobertura (`12coverage_tests.test`).
+
+- ⚠️ **Importante** ⚠️: a tela de login deve ser capaz de direcionar para a tela principal de cada pessoa usuária, sendo as páginas:
+  - Do cliente: `/customer/products`,
+  - Da pessoa vendedora:  `/seller/orders`,
+  - Da pessoa administradora: `/admin/manage`
+
+</details>
+
