@@ -98,22 +98,32 @@ export default function Login() {
   }, [email, password]);
 
   return (
-    <div>
+    <main>
       <form onSubmit={ (event) => handleSubmit(event) }>
-        Login
-        <input
-          data-testid="common_login__input-email"
-          type="email"
-          value={ email }
-          onChange={ (event) => handleChange(event) }
-        />
-        Senha
-        <input
-          data-testid="common_login__input-password"
-          type="password"
-          value={ password }
-          onChange={ (event) => handleChange(event) }
-        />
+        <h1>Sign in</h1>
+        <fieldset>
+          <label htmlFor="email">
+            <input
+              data-testid="common_login__input-email"
+              type="email"
+              placeholder="Login"
+              value={ email }
+              onChange={ (event) => handleChange(event) }
+            />
+          </label>
+        </fieldset>
+        <fieldset>
+          <label htmlFor="password">
+            <input
+              data-testid="common_login__input-password"
+              type="password"
+              placeholder="Password"
+              value={ password }
+              onChange={ (event) => handleChange(event) }
+            />
+          </label>
+        </fieldset>
+
         <button
           data-testid="common_login__button-login"
           type="submit"
@@ -121,6 +131,7 @@ export default function Login() {
         >
           LOGIN
         </button>
+
         <button
           data-testid="common_login__button-register"
           type="button"
@@ -128,6 +139,7 @@ export default function Login() {
         >
           Ainda não tenho conta
         </button>
+
       </form>
       { loginFailed
       && (
@@ -138,6 +150,6 @@ export default function Login() {
           Email não registrado!
         </p>
       )}
-    </div>
+    </main>
   );
 }

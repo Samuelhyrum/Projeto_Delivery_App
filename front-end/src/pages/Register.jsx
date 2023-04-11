@@ -65,27 +65,33 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <main>
       <form onSubmit={ (event) => handleSubmit(event) }>
-        Nome
-        <input
-          data-testid="common_register__input-name"
-          type="text"
-          value={ name }
-          onChange={ (event) => handleChange(event) }
-        />
-        Email
+
+        <h1>Sign up</h1>
+        <fieldset>
+          <input
+            data-testid="common_register__input-name"
+            type="text"
+            placeholder="Name"
+            value={ name }
+            onChange={ (event) => handleChange(event) }
+          />
+        </fieldset>
+        <fieldset />
         <input
           data-testid="common_register__input-email"
           type="email"
           value={ email }
+          placeholder="Email"
           onChange={ (event) => handleChange(event) }
         />
-        Senha
+        <fieldset />
         <input
           data-testid="common_register__input-password"
           type="password"
           value={ password }
+          placeholder="Password"
           onChange={ (event) => handleChange(event) }
         />
         <button
@@ -104,6 +110,6 @@ export default function Register() {
         >
           {MSG_ERROR}
         </p>) }
-    </div>
+    </main>
   );
 }
